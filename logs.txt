@@ -1,0 +1,17 @@
+INFO - import data from transactions1.csv
+INFO - import data from transactions2.csv
+INFO - import data from transactions3.csv
+ERROR - cannot parse date from string - please check whether syntax is correct: Animates,4,13/5/2018
+java.text.ParseException: Unparseable date: "13/5/2018"
+	at java.base/java.text.DateFormat.parse(DateFormat.java:399)
+	at nz.ac.vuw.swen301.tuts.log4j.MergeTransactions.readData(MergeTransactions.java:100)
+	at nz.ac.vuw.swen301.tuts.log4j.MergeTransactions.main(MergeTransactions.java:55)
+INFO - import data from transactions4.csv
+WARN - file transactions4.csv does not exist - skip
+java.io.FileNotFoundException: transactions4.csv (The system cannot find the file specified)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:216)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at java.base/java.io.FileReader.<init>(FileReader.java:75)
+	at nz.ac.vuw.swen301.tuts.log4j.MergeTransactions.readData(MergeTransactions.java:94)
+	at nz.ac.vuw.swen301.tuts.log4j.MergeTransactions.main(MergeTransactions.java:56)

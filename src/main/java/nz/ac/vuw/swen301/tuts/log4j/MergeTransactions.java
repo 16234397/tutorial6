@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -37,6 +38,16 @@ public class MergeTransactions {
 		BasicConfigurator.configure();
 		fileLogger.setLevel(Level.ALL);
 		transactionsLogger.setLevel(Level.ALL);
+		
+		try {
+			FileAppender fileOutput = new FileAppender(new org.apache.log4j.SimpleLayout(),"logs.txt");
+			fileLogger.addAppender(fileOutput);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 		// read data from 4 files
 		readData("transactions1.csv",transactions);
