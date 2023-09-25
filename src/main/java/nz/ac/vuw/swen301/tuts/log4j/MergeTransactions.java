@@ -45,9 +45,12 @@ public class MergeTransactions {
 		readData("transactions4.csv",transactions);
 		
 		// print some info for the user
-		System.out.println("" + transactions.size() + " transactions imported");
-		System.out.println("total value: " + CURRENCY_FORMAT.format(computeTotalValue(transactions)));
-		System.out.println("max value: " + CURRENCY_FORMAT.format(computeMaxValue(transactions)));
+		transactionsLogger.info("" + transactions.size() + " transactions imported");
+		transactionsLogger.info("total value: " + CURRENCY_FORMAT.format(computeTotalValue(transactions)));
+		transactionsLogger.info("max value: " + CURRENCY_FORMAT.format(computeMaxValue(transactions)));
+//		System.out.println("" + transactions.size() + " transactions imported");
+//		System.out.println("total value: " + CURRENCY_FORMAT.format(computeTotalValue(transactions)));
+//		System.out.println("max value: " + CURRENCY_FORMAT.format(computeMaxValue(transactions)));
 
 	}
 	
@@ -73,7 +76,8 @@ public class MergeTransactions {
 		File file = new File(fileName);
 		String line = null;
 		// print info for user
-		System.out.println("import data from " + fileName);
+		fileLogger.info("import data from " + fileName);
+//		System.out.println("import data from " + fileName);
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new FileReader(file));
@@ -86,34 +90,40 @@ public class MergeTransactions {
 				);
 				transactions.add(purchase);
 				// this is for debugging only
-				System.out.println("imported transaction " + purchase);
+//				System.out.println("imported transaction " + purchase);
+				transactionsLogger.debug("imported transaction " + purchase);
 			} 
 		}
 		catch (FileNotFoundException x) {
 			// print warning
-			x.printStackTrace();
-			System.err.println("file " + fileName + " does not exist - skip");
+//			x.printStackTrace();
+//			System.err.println("file " + fileName + " does not exist - skip");
+			fileLogger.warn("file " + fileName + " does not exist - skip", x);
 		}
 		catch (IOException x) {
 			// print error message and details
-			x.printStackTrace();
-			System.err.println("problem reading file " + fileName);
+//			x.printStackTrace();
+//			System.err.println("problem reading file " + fileName);
+			fileLogger.error("problem reading file " + fileName, x);
 		}
 		// happens if date parsing fails
 		catch (ParseException x) { 
 			// print error message and details
-			x.printStackTrace();
-			System.err.println("cannot parse date from string - please check whether syntax is correct: " + line);	
+//			x.printStackTrace();
+//			System.err.println("cannot parse date from string - please check whether syntax is correct: " + line);	
+			fileLogger.error("cannot parse date from string - please check whether syntax is correct: " + line, x);
 		}
 		// happens if double parsing fails
 		catch (NumberFormatException x) {
 			// print error message and details
-			System.err.println("cannot parse double from string - please check whether syntax is correct: " + line);	
+//			System.err.println("cannot parse double from string - please check whether syntax is correct: " + line);
+			fileLogger.error("cannot parse double from string - please check whether syntax is correct: " + line, x);
 		}
 		catch (Exception x) {
 			// any other exception 
 			// print error message and details
-			System.err.println("exception reading data from file " + fileName + ", line: " + line);	
+//			System.err.println("exception reading data from file " + fileName + ", line: " + line);	
+			fileLogger.error("exception reading data from file " + fileName + ", line: " + line, x);
 		}
 		finally {
 			try {
@@ -122,7 +132,9 @@ public class MergeTransactions {
 				}
 			} catch (IOException e) {
 				// print error message and details
-				System.err.println("cannot close reader used to access " + fileName);
+//				System.err.println("cannot close reader used to access " + fileName);
+				fileLogger.error("cannot close reader used to access " + fileName, e);
+				
 			}
 		}
 	}
