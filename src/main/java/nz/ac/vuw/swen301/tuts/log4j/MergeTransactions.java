@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 /**
  * The purpose of this class is to read and merge financial transactions, and print a summary:
  * - total amount 
@@ -24,9 +28,15 @@ public class MergeTransactions {
 
 	private static DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 	private static NumberFormat CURRENCY_FORMAT = NumberFormat.getCurrencyInstance(Locale.getDefault());
+	private static Logger fileLogger = Logger.getLogger("FILE");
+	private static Logger transactionsLogger = Logger.getLogger("TRANSACTIONS");
 
 	public static void main(String[] args) {
 		List<Purchase> transactions = new ArrayList<Purchase>();
+		
+		BasicConfigurator.configure();
+		fileLogger.setLevel(Level.ALL);
+		transactionsLogger.setLevel(Level.ALL);
 		
 		// read data from 4 files
 		readData("transactions1.csv",transactions);
